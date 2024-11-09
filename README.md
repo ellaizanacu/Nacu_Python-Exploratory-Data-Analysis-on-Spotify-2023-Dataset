@@ -36,15 +36,15 @@ The primary goal of this analysis is to explore the dataset, clean any discrepan
 2. **Data Types**: Each column's data type is checked and verified. This includes integers, floats, and categorical types where applicable.
 3. **Missing Values**: A review of missing values is conducted to ensure data quality.
 
-### Problem(s):
+## Problem(s):
 - **Part A**: How many rows and columns does the dataset contain?
 - **Part B**: What are the data types of each column?
 - **Part C**: Are there any missing values?
 
-### Approach: 
+## Approach: 
 - Load the dataset, inspect its shape and data types, check for missing values, and replace any non-numeric entries in the `streams` column.
 
-### Functions to be Used:
+## Functions to be Used:
 - `import numpy as np` – imports the NumPy library and aliases it as `np`, useful for handling numerical data and NaN values.
 - `import pandas as pd` – imports the Pandas library, aliased as `pd`, for data manipulation and analysis.
 - `import matplotlib.pyplot as plt` – imports Matplotlib’s plotting interface, aliased as `plt`, used for visualizations.
@@ -56,7 +56,7 @@ The primary goal of this analysis is to explore the dataset, clean any discrepan
 - `.dtypes` – shows the data type of each column.
 - `.isnull().sum()` – counts the number of missing values in each column.
 
-### Code Breakdown:
+## Code Breakdown:
 
 ##### *Overview of Dataset*
 ```python
@@ -105,7 +105,7 @@ print("\nMissing values:")
 print(Spotify_Data.isnull().sum())
 ```
 
-### Expected Output: 
+## Expected Output: 
 - The shape of the dataset, data types for each column, count of missing values, and confirmation that the specified `streams` value is set to NaN.
 
 ##### **Overview of Dataset**
@@ -175,11 +175,11 @@ dtype: int64
    - Analysis of the distribution of the `released_year` and `artist_count` columns.
    - Trends and outliers in release years and artist collaborations are identified.
 
-### Problem(s):
+## Problem(s):
 - **Part A**: What are the mean, median, and standard deviation of the streams column?
 - **Part B**: What is the distribution of released_year and artist_count? Are there any noticeable trends or outliers?
 
-### Approach:
+## Approach:
 
 ##### *Part A:*
 Use summary statistics methods to get an overview of numerical columns and calculate specific metrics for `streams`.
@@ -190,7 +190,8 @@ Use summary statistics methods to get an overview of numerical columns and calcu
 ##### *Part B:*
 - Use histograms with kernel density estimates (KDE) to visualize the distribution of the release year and artist count.
 
-### Functions to be Used:
+## Functions to be Used:
+##### *Part A:*
 - `print()` – outputs text or variable values to the console.
 - `.describe()` – generates summary statistics for numerical columns, including count, mean, standard deviation, minimum, quartiles, and maximum.
 - `.transpose()` – transposes the DataFrame, swapping rows and columns for easier readability.
@@ -198,6 +199,8 @@ Use summary statistics methods to get an overview of numerical columns and calcu
 - `.mean()` – calculates the average (mean) of a specified column.
 - `.median()` – calculates the median (middle value) of a specified column.
 - `.std()` – calculates the standard deviation of a specified column, showing data dispersion.
+
+##### *Part B:*
 - `plt.figure()` – initializes a new figure with a specified size for plotting.
 - `sns.histplot()` – creates a histogram plot with optional KDE for visualizing the distribution of data in a specific column.
 - `.title()` – adds a title to the plot.
@@ -205,7 +208,7 @@ Use summary statistics methods to get an overview of numerical columns and calcu
 - `.ylabel()` – labels the y-axis.
 - `plt.show()` – displays the plot.
 
-### Code Breakdown:
+## Code Breakdown:
 
 ##### *Part A:*
 ```python
@@ -283,8 +286,9 @@ plt.ylabel('Count')
 plt.show()
 ```
 
-### Expected Output:
+## Expected Output:
 - Summary statistics for all numerical columns, and the mean, median, and standard deviation for the `streams` column.
+- Two histograms showing the distribution of the `released_year` and `artist_count`, helping to identify trends and potential outliers.
 
 ##### *Part A:*
 
@@ -314,30 +318,107 @@ plt.show()
 2. **Most Frequent Artists**:
    - The top 5 most frequent artists, based on the number of tracks in the dataset, are displayed.
 
-### Problem(s):
+## Problem(s):
 - **Part A**: Which track has the highest number of streams? Display the top 5 most streamed tracks.
 - **Part B**: Who are the top 5 most frequent artists based on the number of tracks in the dataset?
 
-### Approach:
+## Approach:
+- Find the top 5 most-streamed tracks by sorting the `streams` column, and identify the top 5 most frequent artists by counting the occurrences in the `artist(s)_name` column.
 
-### Functions to be Used:
+## Functions to be Used:
+##### *Part A:*
+- `.dropna()` – removes rows with missing values from the DataFrame.
+- `.sort_values()` – sorts the DataFrame by a specified column.
+- `.head()` – selects the top `n` rows from the DataFrame.
+- `print()` – outputs text or variable values to the console.
+- `plt.figure()` – initializes a new figure with a specified size for plotting.
+- `sns.barplot()` – creates a bar plot, useful for comparing categorical data.
+- `.title()` – adds a title to the plot.
+- `.xlabel()` – labels the x-axis.
+- `.ylabel()` – labels the y-axis.
+- `plt.show()` – displays the plot.
 
+##### *Part B:*
+- `.value_counts()` – counts unique values in a column, useful for identifying the frequency of each artist.
+- `.head()` – selects the top `n` values from the Series.
+- `print()` – outputs text or variable values to the console.
+- `plt.figure()` – initializes a new figure with a specified size for plotting.
+- `plt.bar()` – creates a bar chart with specified labels and values.
+- `plt.cm.Pastel1()` – applies a softer color palette for the bar plot.
+- `.title()` – adds a title to the plot.
+- `.xlabel()` – labels the x-axis.
+- `.ylabel()` – labels the y-axis.
+- `plt.xticks()` – adjusts x-axis label orientation for readability.
+- `plt.show()` – displays the plot.
 
-### Code Breakdown:
+## Code Breakdown:
 
 ##### *Part A:*
 ```python
+# Selects the 'track_name' and 'streams' columns, drops rows with NaN values in 'streams',
+# sorts by streams in descending order, and selects the top 5 tracks.
+most_streamed = Spotify_Data[['track_name', 'streams']].dropna().sort_values(by='streams', ascending=False).head(5)
 
+# Initializes a figure with size 10x6 inches for the bar plot of top 5 most streamed tracks.
+plt.figure(figsize=(10, 6))
+
+# Creates a horizontal bar plot for 'streams' vs. 'track_name' with a coolwarm color palette.
+sns.barplot(x='streams', y='track_name', data=most_streamed, palette='coolwarm', hue='track_name') 
+
+# Sets the title of the plot to "Top 5 Most Streamed Tracks".
+plt.title('Top 5 Most Streamed Tracks')
+
+# Labels the x-axis as "Streams".
+plt.xlabel('Streams')
+
+# Labels the y-axis as "Track Name".
+plt.ylabel('Track Name')
+
+# Displays the bar plot for the top 5 most streamed tracks.
+plt.show()
 ```
 
 ##### *Part B:*
 ```python
+# Counts occurrences of each artist in the 'artist(s)_name' column, sorts in descending order, and selects the top 5.
+frequent_artists = Spotify_Data['artist(s)_name'].value_counts().head(5)
 
+# Prints the top 5 most frequent artists based on track count.
+print("The Top 5 Most Frequent Artists Based on Track Count:\n")
+print(frequent_artists, "\n")
+
+# Initializes a figure with size 10x6 inches for the bar plot of top 5 most frequent artists.
+plt.figure(figsize=(10, 6))
+
+# Creates a bar plot with artist names on the x-axis and track counts on the y-axis, using a pastel color palette.
+bars = plt.bar(frequent_artists.index, frequent_artists.values, color=plt.cm.Pastel1(range(len(frequent_artists))))
+
+# Sets the title of the plot to "The Top 5 Most Frequent Artists Based on Track Count".
+plt.title('The Top 5 Most Frequent Artists Based on Track Count')
+
+# Labels the x-axis as "Artist(s) Name".
+plt.xlabel('Artist(s) Name')
+
+# Labels the y-axis as "Number of Tracks".
+plt.ylabel('Number of Tracks')
+
+# Rotates the x-axis labels by 45 degrees for improved readability.
+plt.xticks(rotation=45, ha='right')
+
+# Displays the bar plot for the top 5 most frequent artists.
+plt.show()
 ```
 
-### Expected Output:
-- Two histograms showing the distribution of the `released_year` and `artist_count`, helping to identify trends and potential outliers.
+## Expected Output:
+- A list of the top 5 most-streamed tracks with a bar chart visualization and a list of the top 5 most frequent artists with a bar chart.
 
+##### *Part A:*
+
+![image](https://github.com/user-attachments/assets/a8ced73b-9c89-4638-9bc0-0e39ba41b526)
+
+##### *Part B:*
+
+![image](https://github.com/user-attachments/assets/6b7a0335-ae52-4adf-8ef3-f0fc43c8de6c)
 
 ---
 
@@ -349,30 +430,142 @@ plt.show()
    - Examination of release patterns by month to identify any seasonal trends.
    - Identification of the month with the highest number of track releases.
 
-### Problem(s):
+## Problem(s):
 - **Part A**: Analyze the trends in the number of tracks released over time. Plot the number of tracks released per year.
 - **Part B**: Does the number of tracks released per month follow any noticeable patterns? Which month sees the most releases?
 
-### Approach:
+## Approach:
+- Count the number of tracks released per year and per month, and use line and bar plots to visualize the trends.
 
-### Functions to be Used:
+## Functions to be Used:
 
-**Function Used:**
-**Description:**
+##### *Part A:*
+- `.value_counts()` – counts occurrences of each unique value in a column, useful for counting releases per year.
+- `.sort_index()` – sorts the Series by its index, useful for chronological order in time series data.
+- `plt.figure()` – initializes a new figure with a specified size for plotting.
+- `plt.plot()` – creates a line plot with specified x and y data, markers, colors, and labels.
+- `.title()` – adds a title to the plot.
+- `.xlabel()` – labels the x-axis.
+- `.ylabel()` – labels the y-axis.
+- `.grid()` – displays a grid on the plot, with custom line style and width.
+- `.legend()` – displays a legend to label different data in the plot.
+- `.tight_layout()` – adjusts plot parameters for better layout.
+- `plt.show()` – displays the plot.
 
-### Code Breakdown:
+##### *Part B:*
+- `.value_counts()` – counts occurrences of each unique value in a column, useful for counting releases per month.
+- `.sort_index()` – sorts the Series by its index, organizing month data chronologically.
+- `plt.figure()` – initializes a new figure with a specified size for plotting.
+- `.plot(kind='bar')` – creates a bar plot with specified data, labels, and colors.
+- `.title()` – adds a title to the plot.
+- `.xlabel()` – labels the x-axis.
+- `.ylabel()` – labels the y-axis.
+- `.xticks()` – customizes x-axis ticks with specified labels and rotations.
+- `.grid()` – adds a grid to the plot for readability.
+- `.idxmax()` – finds the index of the maximum value in the Series, indicating the peak month.
+- `.max()` – finds the maximum value in the Series, representing the highest track release count.
+- `.legend()` – displays a legend with the month and count of peak releases.
+- `.tight_layout()` – adjusts plot parameters to prevent overlapping elements.
+- `plt.show()` – displays the plot.
+- `print()` – outputs text or variable values to the console.
+
+## Code Breakdown:
 
 ##### *Part A:*
 ```python
+# Counts occurrences of each release year, then sorts by year in ascending order.
+release_year_counts = Spotify_Data['released_year'].value_counts().sort_index()
 
+# Initializes a figure with size 10x6 inches for the line plot.
+plt.figure(figsize=(10, 6))
+
+# Plots the release year (x-axis) vs. number of tracks (y-axis), with a sky-blue line, markers, and peak year label.
+plt.plot(release_year_counts.index, release_year_counts.values, marker='o', color='skyblue', label=f'Peak Year: {release_year_counts.idxmax()}')
+
+# Sets the title of the plot to "Number of Tracks Released Over Time" and customizes font size.
+plt.title('Number of Tracks Released Over Time', fontsize=16)
+
+# Labels the x-axis as "Year" with a font size of 14.
+plt.xlabel('Year', fontsize=14)
+
+# Labels the y-axis as "Number of Tracks" with a font size of 14.
+plt.ylabel('Number of Tracks', fontsize=14)
+
+# Adds a dashed grid to the plot with a line width of 0.5 for better readability.
+plt.grid(visible=True, linestyle='--', linewidth=0.5)
+
+# Displays a legend to label the peak year in the plot.
+plt.legend(fontsize=12)
+
+# Adjusts the layout to prevent overlapping elements and improve visual alignment.
+plt.tight_layout()
+
+# Displays the line plot showing the number of tracks released over time.
+plt.show()
 ```
 
 ##### *Part B:*
 ```python
+# Counts occurrences of each release month, then sorts by month in ascending order.
+monthly_release_counts = Spotify_Data['released_month'].value_counts().sort_index()
 
+# Initializes a figure with size 10x6 inches for the bar plot.
+plt.figure(figsize=(10, 6))
+
+# Plots the monthly release counts as a bar chart with a lightseagreen color for bars.
+monthly_release_counts.plot(kind='bar', color='lightseagreen')
+
+# Sets the title of the plot to "Number of Tracks Released Per Month" and customizes font size.
+plt.title('Number of Tracks Released Per Month', fontsize=16)
+
+# Labels the x-axis as "Month" with a font size of 14.
+plt.xlabel('Month', fontsize=14)
+
+# Labels the y-axis as "Number of Tracks" with a font size of 14.
+plt.ylabel('Number of Tracks', fontsize=14)
+
+# Sets custom x-axis tick labels for each month and rotates them by 45 degrees for readability.
+plt.xticks(ticks=range(12), labels=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], rotation=45)
+
+# Adds a dashed grid to the plot with a line width of 0.5 for better readability.
+plt.grid(visible=True, linestyle='--', linewidth=0.5)
+
+# Finds the month with the highest number of releases and stores it as `peak_month`.
+peak_month = monthly_release_counts.idxmax()
+
+# Maps the numeric month index to the month name and gets the release count for that month.
+peak_month_name = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][peak_month - 1]
+peak_month_count = monthly_release_counts.max()
+
+# Displays a legend with the name and release count of the month with the most releases.
+plt.legend([f'Most releases: {peak_month_name} ({peak_month_count} tracks)'], fontsize=12)
+
+# Adjusts the layout to prevent overlapping elements and improve visual alignment.
+plt.tight_layout()
+
+# Displays the bar plot showing the number of tracks released per month.
+plt.show()
+
+# Prints the month name and track count for the month with the most releases.
+print(f"\nMonth with the most releases: {peak_month_name}")
+print(f"Number of tracks released in that month: {peak_month_count}")
 ```
 
-### Expected Output:
+## Expected Output:
+- Line plot showing the number of tracks released each year and a bar plot showing monthly release trends with labels for the peak release year and month.
+
+##### *Part A:*
+
+![image](https://github.com/user-attachments/assets/b5ca40c9-f651-438c-88d4-b5f889aee148)
+
+##### *Part B:*
+
+![image](https://github.com/user-attachments/assets/b1dcee0d-08d2-4853-ba27-91393ac10a55)
+
+```python
+Month with the most releases: Jan
+Number of tracks released in that month: 134
+```
 
 ---
 
@@ -384,18 +577,22 @@ plt.show()
 2. **Danceability and Energy Relationship**:
    - Correlation between `danceability_%` and `energy_%` as well as between `valence_%` and `acousticness_%`.
 
-### Problem(s):
+## Problem(s):
 - **Part A**: Examine the correlation between streams and musical attributes like bpm, danceability_%, and energy_%. Which attributes seem to influence streams the most?
 - **Part B**: Is there a correlation between danceability_% and energy_%? How about valence_% and acousticness_%?
 
-### Approach:
+## Approach:
+##### *Part A:*
+##### *Part B:*
 
-### Functions to be Used:
+## Functions to be Used:
 
-**Function Used:**
-**Description:**
 
-### Code Breakdown:
+##### *Part A:*
+##### *Part B:*
+
+
+## Code Breakdown:
 
 ##### *Part A:*
 ```python
@@ -407,7 +604,11 @@ plt.show()
 
 ```
 
-### Expected Output:
+## Expected Output:
+
+##### *Part A:*
+##### *Part B:*
+
 
 ---
 
@@ -417,17 +618,22 @@ plt.show()
    - Comparison of track counts across platforms (`spotify_playlists`, `spotify_charts`, and `apple_playlists`).
    - Determination of which platform tends to favor popular tracks.
 
-### Problem(s):
+## Problem(s):
 - How do the numbers of tracks in spotify_playlists, spotify_charts, and apple_playlists compare? Which platform seems to favor the most popular tracks?
 
-### Approach:
+## Approach:
+##### *Part A:*
+##### *Part B:*
 
-### Functions to be Used:
 
-**Function Used:**
-**Description:**
+## Functions to be Used:
 
-### Code Breakdown:
+##### *Part A:*
+##### *Part B:*
+
+
+
+## Code Breakdown:
 
 ##### *Part A:*
 ```python
@@ -439,7 +645,11 @@ plt.show()
 
 ```
 
-### Expected Output:
+## Expected Output:
+
+##### *Part A:*
+##### *Part B:*
+
 
 ---
 
@@ -451,18 +661,24 @@ plt.show()
    - Identification of genres or artists that appear most frequently in playlists or charts.
    - Comparison of frequently appearing artists across platforms to determine platform-specific preferences.
 
-### Problem(s):
+## Problem(s):
 - **Part A**: Based on the streams data, can you identify any patterns among tracks with the same key or mode (Major vs. Minor)?
 - **Part B**: Do certain genres or artists consistently appear in more playlists or charts? Perform an analysis to compare the most frequently appearing artists in playlists or charts.
 
-### Approach:
+## Approach:
+##### *Part A:*
+##### *Part B:*
 
-### Functions to be Used:
 
-**Function Used:**
-**Description:**
+## Functions to be Used:
 
-### Code Breakdown:
+
+##### *Part A:*
+##### *Part B:*
+
+
+
+## Code Breakdown:
 
 ##### *Part A:*
 ```python
@@ -474,7 +690,11 @@ plt.show()
 
 ```
 
-### Expected Output:
+## Expected Output:
+
+##### *Part A:*
+##### *Part B:*
+
 
 ---
 
