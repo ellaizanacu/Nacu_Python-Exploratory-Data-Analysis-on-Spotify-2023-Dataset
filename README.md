@@ -45,16 +45,65 @@ The primary goal of this analysis is to explore the dataset, clean any discrepan
 - Load the dataset, inspect its shape and data types, check for missing values, and replace any non-numeric entries in the `streams` column.
 
 ## Functions to be Used:
-- `import numpy as np` – imports the NumPy library and aliases it as `np`, useful for handling numerical data and NaN values.
-- `import pandas as pd` – imports the Pandas library, aliased as `pd`, for data manipulation and analysis.
-- `import matplotlib.pyplot as plt` – imports Matplotlib’s plotting interface, aliased as `plt`, used for visualizations.
-- `import seaborn as sns` – imports the Seaborn library for advanced statistical data visualization, built on top of Matplotlib.
-- `pd.read_excel()` – reads an Excel file into a Pandas DataFrame.
-- `.loc[]` – accesses specific rows and columns by label to modify or view data.
-- `print()` – outputs text or variable values to the console.
-- `.shape` – returns a tuple indicating the number of rows and columns in the DataFrame.
-- `.dtypes` – shows the data type of each column.
-- `.isnull().sum()` – counts the number of missing values in each column.
+
+##### *Overview of Dataset*
+  - **`Function:`** `import numpy as np`
+    - **`Description:`** Imports the NumPy library and assigns it the alias `np`, which is commonly used for numerical operations in Python.
+
+  - **`Function:`** `import pandas as pd`
+    - **`Description:`** Imports the Pandas library and assigns it the alias `pd`, which is used for data manipulation and analysis.
+
+  - **`Function:`** `import matplotlib.pyplot as plt`
+    - **`Description:`** Imports the `pyplot` module from Matplotlib and assigns it the alias `plt`, commonly used for creating visualizations.
+
+  - **`Function:`** `import seaborn as sns`
+    - **`Description:`** Imports the Seaborn library, a statistical data visualization library based on Matplotlib, and assigns it the alias `sns`.
+
+  - **`Function:`** `Spotify_Data = pd.read_excel('spotify-2023.xlsx')`
+    - **`Description:`** Reads the Excel file `'spotify-2023.xlsx'` into a Pandas DataFrame named `Spotify_Data`. This file is assumed to contain the Spotify dataset.
+
+  - **`Function:`** `Spotify_Data`
+    - **`Description:`** Displays the first and last few rows of the DataFrame `Spotify_Data`, allowing a quick overview of the dataset's structure and contents.
+
+##### *Modified Data*
+  - **`Function:`** `Spotify_Data.loc[Spotify_Data['track_name'] == 'Love Grows (Where My Rosemary Goes)', 'streams'] = np.nan`
+    - **`Description:`** Locates the row in `Spotify_Data` where the 'track_name' is 'Love Grows (Where My Rosemary Goes)' and replaces the 'streams' value with `np.nan` (representing a missing value). This helps clean the data by setting non-numeric values in 'streams' to `NaN`.
+
+  - **`Function:`** `print("\nModified Data for 'Love Grows (Where My Rosemary Goes)':\n")`
+    - **`Description:`** Prints a label to indicate the output, specifically showing the modified data for the specified track, followed by newline characters for better readability.
+
+  - **`Function:`** `Spotify_Data[Spotify_Data['track_name'] == 'Love Grows (Where My Rosemary Goes)']`
+    - **`Description:`** Filters `Spotify_Data` to display only the row where 'track_name' is 'Love Grows (Where My Rosemary Goes)', allowing verification that the 'streams' value was correctly modified.
+
+##### *Part A:*
+  - **`Function:`** `Spotify_Data.shape`
+    - **`Description:`** Returns the shape of the `Spotify_Data` DataFrame, which represents the number of rows and columns in the dataset.
+
+  - **`Function:`** `print("Shape of the dataset:", Spotify_Data.shape)`
+    - **`Description:`** Prints the shape of the `Spotify_Data` dataset, giving an overview of its dimensions (number of rows and columns).
+      
+##### *Part B:*
+  - **`Function:`** `Spotify_Data.dtypes`
+    - **`Description:`** Returns the data types of each column in the `Spotify_Data` DataFrame, helping to understand the type of data (e.g., integer, float, object) in each column.
+
+  - **`Function:`** `print("\nData types:")`
+    - **`Description:`** Prints a label "Data types" followed by a newline, providing context for the output of the data types.
+
+  - **`Function:`** `print(Spotify_Data.dtypes)`
+    - **`Description:`** Prints the data types of each column in the `Spotify_Data` DataFrame, allowing the user to verify the data type of every column in the dataset.
+
+##### *Part C:*
+  - **`Function:`** `Spotify_Data.isnull()`
+    - **`Description:`** Checks each entry in the `Spotify_Data` DataFrame to determine if it contains a missing value (i.e., `NaN`).
+
+  - **`Function:`** `Spotify_Data.isnull().sum()`
+    - **`Description:`** Sums the boolean values returned by `isnull()`, counting the total number of missing values (`NaN`) in each column of the `Spotify_Data` DataFrame.
+
+  - **`Function:`** `print("\nMissing values:")`
+    - **`Description:`** Prints a label "Missing values:" followed by a newline to provide context for the output of missing value counts.
+
+  - **`Function:`** `print(Spotify_Data.isnull().sum())`
+    - **`Description:`** Prints the total count of missing values for each column in the `Spotify_Data` DataFrame, helping to identify if there are any `NaN` values remaining after data cleaning.
 
 ## Code Breakdown:
 
@@ -192,21 +241,78 @@ Use summary statistics methods to get an overview of numerical columns and calcu
 
 ## Functions to be Used:
 ##### *Part A:*
-- `print()` – outputs text or variable values to the console.
-- `.describe()` – generates summary statistics for numerical columns, including count, mean, standard deviation, minimum, quartiles, and maximum.
-- `.transpose()` – transposes the DataFrame, swapping rows and columns for easier readability.
-- `f-string` – formats strings with embedded variables or expressions, used here to print a line separator.
-- `.mean()` – calculates the average (mean) of a specified column.
-- `.median()` – calculates the median (middle value) of a specified column.
-- `.std()` – calculates the standard deviation of a specified column, showing data dispersion.
+  - **`Function:`** `Spotify_Data.describe()`
+    - **`Description:`** Generates summary statistics for the numerical columns in the `Spotify_Data` DataFrame, including count, mean, standard deviation, min, max, and percentiles.
+
+  - **`Function:`** `Spotify_Data.describe().transpose()`
+    - **`Description:`** Transposes the result of `describe()` to display the statistics in a more readable format, with columns as rows.
+
+  - **`Function:`** `print("Summary Statistics for Numerical Columns:\n")`
+    - **`Description:`** Prints a label "Summary Statistics for Numerical Columns" followed by a newline to introduce the summary statistics output.
+
+  - **`Function:`** `print(Spotify_Data.describe().transpose())`
+    - **`Description:`** Prints the summary statistics for the numerical columns in the `Spotify_Data` DataFrame, showing essential statistics like mean, standard deviation, etc.
+
+  - **`Function:`** `print(f"{'-'*30}")`
+    - **`Description:`** Prints a line of dashes (30 dashes) to visually separate sections of the output for better readability.
+
+  - **`Function:`** `Spotify_Data['streams'].mean()`
+    - **`Description:`** Calculates the mean (average) of the 'streams' column in the `Spotify_Data` DataFrame.
+
+  - **`Function:`** `Spotify_Data['streams'].median()`
+    - **`Description:`** Calculates the median of the 'streams' column in the `Spotify_Data` DataFrame, which represents the middle value when the data is ordered.
+
+  - **`Function:`** `Spotify_Data['streams'].std()`
+    - **`Description:`** Calculates the standard deviation of the 'streams' column in the `Spotify_Data` DataFrame, indicating how much the stream values deviate from the mean.
+
+  - **`Function:`** `print("\nDetailed Statistics for 'Streams' Column:")`
+    - **`Description:`** Prints a label "Detailed Statistics for 'Streams' Column" followed by a newline to introduce the specific statistics for the 'streams' column.
+
+  - **`Function:`** `print("Mean streams:", mean_streams)`
+    - **`Description:`** Prints the calculated mean of the 'streams' column.
+
+  - **`Function:`** `print("Median streams:", median_streams)`
+    - **`Description:`** Prints the calculated median of the 'streams' column.
+
+  - **`Function:`** `print("Standard deviation of streams:", std_streams)`
+    - **`Description:`** Prints the calculated standard deviation of the 'streams' column, giving insight into the spread of the data.
 
 ##### *Part B:*
-- `plt.figure()` – initializes a new figure with a specified size for plotting.
-- `sns.histplot()` – creates a histogram plot with optional KDE for visualizing the distribution of data in a specific column.
-- `.title()` – adds a title to the plot.
-- `.xlabel()` – labels the x-axis.
-- `.ylabel()` – labels the y-axis.
-- `plt.show()` – displays the plot.
+  - **`Function:`** `plt.figure(figsize=(10, 6))`
+    - **`Description:`** Initializes a new figure for the histogram with a size of 10 by 6 inches.
+
+  - **`Function:`** `sns.histplot(Spotify_Data['released_year'], bins=20, kde=True)`
+    - **`Description:`** Creates a histogram with 20 bins for the 'released_year' column from `Spotify_Data`, and overlays a kernel density estimate (KDE) to show the distribution of release years.
+
+  - **`Function:`** `plt.title('Distribution of Released Year')`
+    - **`Description:`** Sets the title of the plot to "Distribution of Released Year."
+
+  - **`Function:`** `plt.xlabel('Released Year')`
+    - **`Description:`** Sets the label for the x-axis to "Released Year."
+
+  - **`Function:`** `plt.ylabel('Count')`
+    - **`Description:`** Sets the label for the y-axis to "Count," indicating the number of occurrences for each 'released_year'.
+
+  - **`Function:`** `plt.show()`
+    - **`Description:`** Displays the plot for the 'released_year' distribution.
+
+  - **`Function:`** `plt.figure(figsize=(10, 6))`
+    - **`Description:`** Initializes a new figure for the second histogram with a size of 10 by 6 inches.
+
+  - **`Function:`** `sns.histplot(Spotify_Data['artist_count'], bins=20, kde=True)`
+    - **`Description:`** Creates a histogram with 20 bins for the 'artist_count' column from `Spotify_Data`, and overlays a kernel density estimate (KDE) to show the distribution of the number of artists.
+
+  - **`Function:`** `plt.title('Distribution of Artist Count')`
+    - **`Description:`** Sets the title of the plot to "Distribution of Artist Count."
+
+  - **`Function:`** `plt.xlabel('Artist Count')`
+    - **`Description:`** Sets the label for the x-axis to "Artist Count."
+
+  - **`Function:`** `plt.ylabel('Count')`
+    - **`Description:`** Sets the label for the y-axis to "Count," indicating the number of occurrences for each 'artist_count'.
+
+  - **`Function:`** `plt.show()`
+    - **`Description:`** Displays the plot for the 'artist_count' distribution.
 
 ## Code Breakdown:
 
@@ -327,29 +433,75 @@ plt.show()
 
 ## Functions to be Used:
 ##### *Part A:*
-- `.dropna()` – removes rows with missing values from the DataFrame.
-- `.sort_values()` – sorts the DataFrame by a specified column.
-- `.head()` – selects the top `n` rows from the DataFrame.
-- `print()` – outputs text or variable values to the console.
-- `plt.figure()` – initializes a new figure with a specified size for plotting.
-- `sns.barplot()` – creates a bar plot, useful for comparing categorical data.
-- `.title()` – adds a title to the plot.
-- `.xlabel()` – labels the x-axis.
-- `.ylabel()` – labels the y-axis.
-- `plt.show()` – displays the plot.
+  - **`Function:`** `Spotify_Data[['track_name', 'streams']]`
+    - **`Description:`** Selects the 'track_name' and 'streams' columns from the `Spotify_Data` DataFrame to focus on these two attributes for further analysis.
+
+  - **`Function:`** `.dropna()`
+    - **`Description:`** Removes any rows that contain `NaN` (missing) values from the selected 'track_name' and 'streams' columns, ensuring only valid data is considered.
+
+  - **`Function:`** `.sort_values(by='streams', ascending=False)`
+    - **`Description:`** Sorts the data by the 'streams' column in descending order, ensuring the tracks with the highest streams appear at the top.
+
+  - **`Function:`** `.head(5)`
+    - **`Description:`** Selects the top 5 rows from the sorted DataFrame, which corresponds to the top 5 most streamed tracks.
+
+  - **`Function:`** `print("The Top 5 Most Streamed Tracks in Spotify:\n")`
+    - **`Description:`** Prints a label indicating the output of the top 5 most streamed tracks.
+
+  - **`Function:`** `print(most_streamed, "\n")`
+    - **`Description:`** Prints the `most_streamed` DataFrame, which contains the top 5 tracks by stream count.
+
+  - **`Function:`** `plt.figure(figsize=(10, 6))`
+    - **`Description:`** Initializes a new figure for plotting with a size of 10 by 6 inches.
+
+  - **`Function:`** `sns.barplot(x='streams', y='track_name', data=most_streamed, palette='coolwarm', hue='track_name')`
+    - **`Description:`** Creates a horizontal bar plot for the 'streams' vs. 'track_name' columns from the `most_streamed` DataFrame. The `palette='coolwarm'` argument sets the color palette, and `hue='track_name'` differentiates the bars by track.
+
+  - **`Function:`** `plt.title('Top 5 Most Streamed Tracks')`
+    - **`Description:`** Sets the title of the plot to "Top 5 Most Streamed Tracks."
+
+  - **`Function:`** `plt.xlabel('Streams')`
+    - **`Description:`** Sets the label for the x-axis to "Streams," indicating the number of streams for each track.
+
+  - **`Function:`** `plt.ylabel('Track Name')`
+    - **`Description:`** Sets the label for the y-axis to "Track Name," displaying the names of the tracks.
+
+  - **`Function:`** `plt.show()`
+    - **`Description:`** Displays the plot, allowing visualization of the top 5 most streamed tracks.
 
 ##### *Part B:*
-- `.value_counts()` – counts unique values in a column, useful for identifying the frequency of each artist.
-- `.head()` – selects the top `n` values from the Series.
-- `print()` – outputs text or variable values to the console.
-- `plt.figure()` – initializes a new figure with a specified size for plotting.
-- `plt.bar()` – creates a bar chart with specified labels and values.
-- `plt.cm.Pastel1()` – applies a softer color palette for the bar plot.
-- `.title()` – adds a title to the plot.
-- `.xlabel()` – labels the x-axis.
-- `.ylabel()` – labels the y-axis.
-- `plt.xticks()` – adjusts x-axis label orientation for readability.
-- `plt.show()` – displays the plot.
+  - **`Function:`** `Spotify_Data['artist(s)_name'].value_counts()`
+    - **`Description:`** Counts the occurrences of each unique artist in the 'artist(s)_name' column of the `Spotify_Data` DataFrame, showing how many tracks each artist has in the dataset.
+
+  - **`Function:`** `.head(5)`
+    - **`Description:`** Selects the top 5 artists with the highest track counts from the `value_counts()` result.
+
+  - **`Function:`** `print("The Top 5 Most Frequent Artists Based on Track Count:\n")`
+    - **`Description:`** Prints a label indicating the output of the top 5 most frequent artists based on track count.
+
+  - **`Function:`** `print(frequent_artists, "\n")`
+    - **`Description:`** Prints the `frequent_artists` variable, which contains the top 5 artists by track count.
+
+  - **`Function:`** `plt.figure(figsize=(10, 6))`
+    - **`Description:`** Initializes a new figure for plotting with a size of 10 by 6 inches.
+
+  - **`Function:`** `plt.bar(frequent_artists.index, frequent_artists.values, color=plt.cm.Pastel1(range(len(frequent_artists))))`
+    - **`Description:`** Creates a bar plot with the artist names as the x-axis (using `frequent_artists.index`) and the number of tracks as the y-axis (using `frequent_artists.values`). The `color=plt.cm.Pastel1(range(len(frequent_artists)))` argument applies a soft pastel color palette to the bars.
+
+  - **`Function:`** `plt.title('The Top 5 Most Frequent Artists Based on Track Count')`
+    - **`Description:`** Sets the title of the plot to "The Top 5 Most Frequent Artists Based on Track Count."
+
+  - **`Function:`** `plt.xlabel('Artist(s) Name')`
+    - **`Description:`** Sets the label for the x-axis to "Artist(s) Name."
+
+  - **`Function:`** `plt.ylabel('Number of Tracks')`
+    - **`Description:`** Sets the label for the y-axis to "Number of Tracks."
+
+  - **`Function:`** `plt.xticks(rotation=45, ha='right')`
+    - **`Description:`** Rotates the x-axis labels by 45 degrees for better readability, and aligns the labels to the right using `ha='right'`.
+
+  - **`Function:`** `plt.show()`
+    - **`Description:`** Displays the plot, allowing visualization of the top 5 most frequent artists based on track count.
 
 ## Code Breakdown:
 
@@ -440,34 +592,87 @@ plt.show()
 ## Functions to be Used:
 
 ##### *Part A:*
-- `.value_counts()` – counts occurrences of each unique value in a column, useful for counting releases per year.
-- `.sort_index()` – sorts the Series by its index, useful for chronological order in time series data.
-- `plt.figure()` – initializes a new figure with a specified size for plotting.
-- `plt.plot()` – creates a line plot with specified x and y data, markers, colors, and labels.
-- `.title()` – adds a title to the plot.
-- `.xlabel()` – labels the x-axis.
-- `.ylabel()` – labels the y-axis.
-- `.grid()` – displays a grid on the plot, with custom line style and width.
-- `.legend()` – displays a legend to label different data in the plot.
-- `.tight_layout()` – adjusts plot parameters for better layout.
-- `plt.show()` – displays the plot.
+  - **`Function:`** `Spotify_Data['released_year'].value_counts()`
+    - **`Description:`** Counts the occurrences of each unique value in the 'released_year' column of the `Spotify_Data` DataFrame, indicating how many tracks were released in each year.
+
+  - **`Function:`** `.sort_index()`
+    - **`Description:`** Sorts the counted values by the index (year) in ascending order, ensuring the years are displayed chronologically.
+
+  - **`Function:`** `plt.figure(figsize=(10, 6))`
+    - **`Description:`** Initializes a new figure for plotting with a size of 10 by 6 inches.
+
+  - **`Function:`** `plt.plot(release_year_counts.index, release_year_counts.values, marker='o', color='skyblue', label=f'Peak Year: {release_year_counts.idxmax()}')`
+    - **`Description:`** Creates a line plot with years on the x-axis (`release_year_counts.index`) and the number of tracks released in those years on the y-axis (`release_year_counts.values`). It uses circular markers ('o') and the color 'skyblue'. The `label` argument displays the peak release year on the legend.
+
+  - **`Function:`** `plt.title('Number of Tracks Released Over Time', fontsize=16)`
+    - **`Description:`** Sets the title of the plot to "Number of Tracks Released Over Time" with a font size of 16.
+
+  - **`Function:`** `plt.xlabel('Year', fontsize=14)`
+    - **`Description:`** Sets the label for the x-axis to "Year" with a font size of 14.
+
+  - **`Function:`** `plt.ylabel('Number of Tracks', fontsize=14)`
+    - **`Description:`** Sets the label for the y-axis to "Number of Tracks" with a font size of 14.
+
+  - **`Function:`** `plt.grid(visible=True, linestyle='--', linewidth=0.5)`
+    - **`Description:`** Displays a grid on the plot with dashed lines ('--') and a line width of 0.5 for better readability.
+
+  - **`Function:`** `plt.legend(fontsize=12)`
+    - **`Description:`** Displays the legend with a font size of 12. The legend shows the peak year information.
+
+  - **`Function:`** `plt.tight_layout()`
+    - **`Description:`** Adjusts the plot layout to ensure everything fits within the figure, avoiding clipping of labels or titles.
+
+  - **`Function:`** `plt.show()`
+    - **`Description:`** Displays the plot, visualizing the number of tracks released over time.
 
 ##### *Part B:*
-- `.value_counts()` – counts occurrences of each unique value in a column, useful for counting releases per month.
-- `.sort_index()` – sorts the Series by its index, organizing month data chronologically.
-- `plt.figure()` – initializes a new figure with a specified size for plotting.
-- `.plot(kind='bar')` – creates a bar plot with specified data, labels, and colors.
-- `.title()` – adds a title to the plot.
-- `.xlabel()` – labels the x-axis.
-- `.ylabel()` – labels the y-axis.
-- `.xticks()` – customizes x-axis ticks with specified labels and rotations.
-- `.grid()` – adds a grid to the plot for readability.
-- `.idxmax()` – finds the index of the maximum value in the Series, indicating the peak month.
-- `.max()` – finds the maximum value in the Series, representing the highest track release count.
-- `.legend()` – displays a legend with the month and count of peak releases.
-- `.tight_layout()` – adjusts plot parameters to prevent overlapping elements.
-- `plt.show()` – displays the plot.
-- `print()` – outputs text or variable values to the console.
+  - **`Function:`** `Spotify_Data['released_month'].value_counts()`
+    - **`Description:`** Counts the occurrences of each unique month in the 'released_month' column of the `Spotify_Data` DataFrame, showing how many tracks were released in each month.
+
+  - **`Function:`** `.sort_index()`
+    - **`Description:`** Sorts the counted values by the month index (in chronological order from January to December).
+
+  - **`Function:`** `plt.figure(figsize=(10, 6))`
+    - **`Description:`** Initializes a new figure for plotting with a size of 10 by 6 inches.
+
+  - **`Function:`** `monthly_release_counts.plot(kind='bar', color='lightseagreen')`
+    - **`Description:`** Creates a bar plot for the `monthly_release_counts` data, with bars colored 'lightseagreen' to represent the number of tracks released in each month.
+
+  - **`Function:`** `plt.title('Number of Tracks Released Per Month', fontsize=16)`
+    - **`Description:`** Sets the title of the plot to "Number of Tracks Released Per Month" with a font size of 16.
+
+  - **`Function:`** `plt.xlabel('Month', fontsize=14)`
+    - **`Description:`** Sets the label for the x-axis to "Month" with a font size of 14.
+
+  - **`Function:`** `plt.ylabel('Number of Tracks', fontsize=14)`
+    - **`Description:`** Sets the label for the y-axis to "Number of Tracks" with a font size of 14.
+
+  - **`Function:`** `plt.xticks(ticks=range(12), labels=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], rotation=45)`
+    - **`Description:`** Sets the x-axis ticks to represent each month (from January to December), with labels rotated by 45 degrees for readability.
+
+  - **`Function:`** `plt.grid(visible=True, linestyle='--', linewidth=0.5)`
+    - **`Description:`** Displays a grid on the plot with dashed lines ('--') and a line width of 0.5 for better readability.
+
+  - **`Function:`** `monthly_release_counts.idxmax()`
+    - **`Description:`** Finds the index (month) with the highest count of released tracks.
+
+  - **`Function:`** `monthly_release_counts.max()`
+    - **`Description:`** Returns the maximum value from `monthly_release_counts`, which is the number of tracks released in the peak month.
+
+  - **`Function:`** `plt.legend([f'Most releases: {peak_month_name} ({peak_month_count} tracks)'], fontsize=12)`
+    - **`Description:`** Displays the legend, highlighting the month with the most releases and the number of tracks released during that month.
+
+  - **`Function:`** `plt.tight_layout()`
+    - **`Description:`** Adjusts the plot layout to ensure that all elements fit within the figure and nothing is clipped.
+
+  - **`Function:`** `plt.show()`
+    - **`Description:`** Displays the plot, visualizing the number of tracks released per month.
+
+  - **`Function:`** `print(f"\nMonth with the most releases: {peak_month_name}")`
+    - **`Description:`** Prints the month with the most releases.
+
+  - **`Function:`** `print(f"Number of tracks released in that month: {peak_month_count}")`
+    - **`Description:`** Prints the number of tracks released in the month with the highest number of releases.
 
 ## Code Breakdown:
 
@@ -587,28 +792,166 @@ Number of tracks released in that month: 134
 
 ## Functions to be Used:
 
-
 ##### *Part A:*
-##### *Part B:*
+  - **`Function:`** `Spotify_Data[['streams', 'bpm', 'danceability_%', 'energy_%']].corr()`
+    - **`Description:`** Computes the correlation matrix for the selected columns ('streams', 'bpm', 'danceability_%', 'energy_%') in the `Spotify_Data` DataFrame. This matrix shows the linear relationship between the variables.
 
+  - **`Function:`** `print("Correlation matrix:\n")`
+    - **`Description:`** Prints a header text indicating that the correlation matrix will be displayed.
+
+  - **`Function:`** `print(correlation_matrix, "\n")`
+    - **`Description:`** Prints the correlation matrix to the console, showing the relationships between the selected musical attributes and the 'streams' column.
+
+  - **`Function:`** `plt.figure(figsize=(8, 6))`
+    - **`Description:`** Initializes a new figure for plotting with a size of 8 by 6 inches.
+
+  - **`Function:`** `sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)`
+    - **`Description:`** Creates a heatmap to visualize the correlation matrix. The `annot=True` argument displays the numerical values in the cells, `cmap='coolwarm'` sets the color palette, and `vmin=-1` and `vmax=1` specify the range of correlation values, from -1 (strong negative correlation) to 1 (strong positive correlation).
+
+  - **`Function:`** `plt.title('Correlation between Streams and Musical Attributes')`
+    - **`Description:`** Sets the title of the heatmap to "Correlation between Streams and Musical Attributes".
+
+  - **`Function:`** `plt.show()`
+    - **`Description:`** Displays the heatmap plot to visualize the correlation matrix.
+  
+##### *Part B:*
+  - **`Function:`** `Spotify_Data['danceability_%'].corr(Spotify_Data['energy_%'])`
+    - **`Description:`** Computes the Pearson correlation between the 'danceability_%' and 'energy_%' columns in the `Spotify_Data` DataFrame, showing the linear relationship between danceability and energy.
+
+  - **`Function:`** `print(f"Correlation between Danceability and Energy: {dance_energy_corr:.2f}")`
+    - **`Description:`** Prints the correlation between danceability and energy, formatted to two decimal places.
+
+  - **`Function:`** `Spotify_Data['valence_%'].corr(Spotify_Data['acousticness_%'])`
+    - **`Description:`** Computes the Pearson correlation between the 'valence_%' and 'acousticness_%' columns in the `Spotify_Data` DataFrame, indicating the linear relationship between valence and acousticness.
+
+  - **`Function:`** `print(f"Correlation between Valence and Acousticness: {valence_acoustic_corr:.2f}")`
+    - **`Description:`** Prints the correlation between valence and acousticness, formatted to two decimal places.
+
+  - **`Function:`** `plt.subplots(1, 2, figsize=(18, 8))`
+    - **`Description:`** Creates a figure with two subplots (1 row, 2 columns) and specifies the figure size of 18 by 8 inches.
+
+  - **`Function:`** `sns.regplot(x='danceability_%', y='energy_%', data=Spotify_Data, scatter_kws={'s': 50, 'alpha': 0.5, 'color': 'darkblue'}, line_kws={'color': 'red', 'linewidth': 2}, ax=axes[0])`
+    - **`Description:`** Creates a scatter plot with a regression line for 'danceability_%' vs 'energy_%'. The `scatter_kws` argument customizes the scatter plot (size, transparency, color), and the `line_kws` argument customizes the regression line (color and width). This plot is placed in the first subplot (`axes[0]`).
+
+  - **`Function:`** `axes[0].set_title('Danceability vs Energy', fontsize=18)`
+    - **`Description:`** Sets the title for the first subplot as 'Danceability vs Energy' with a font size of 18.
+
+  - **`Function:`** `axes[0].set_xlabel('Danceability (%)', fontsize=14)`
+    - **`Description:`** Labels the x-axis of the first subplot as 'Danceability (%)' with a font size of 14.
+
+  - **`Function:`** `axes[0].set_ylabel('Energy (%)', fontsize=14)`
+    - **`Description:`** Labels the y-axis of the first subplot as 'Energy (%)' with a font size of 14.
+
+  - **`Function:`** `axes[0].grid(True, linestyle='--', linewidth=0.7, alpha=0.5)`
+    - **`Description:`** Adds a grid to the first subplot with dashed lines, line width of 0.7, and alpha transparency of 0.5.
+
+  - **`Function:`** `sns.regplot(x='valence_%', y='acousticness_%', data=Spotify_Data, scatter_kws={'s': 50, 'alpha': 0.5, 'color': 'darkgreen'}, line_kws={'color': 'orange', 'linewidth': 2}, ax=axes[1])`
+    - **`Description:`** Creates a scatter plot with a regression line for 'valence_%' vs 'acousticness_%'. Customizes the scatter and line properties, placing the plot in the second subplot (`axes[1]`).
+
+  - **`Function:`** `axes[1].set_title('Valence vs Acousticness', fontsize=18)`
+    - **`Description:`** Sets the title for the second subplot as 'Valence vs Acousticness' with a font size of 18.
+
+  - **`Function:`** `axes[1].set_xlabel('Valence (%)', fontsize=14)`
+    - **`Description:`** Labels the x-axis of the second subplot as 'Valence (%)' with a font size of 14.
+
+  - **`Function:`** `axes[1].set_ylabel('Acousticness (%)', fontsize=14)`
+    - **`Description:`** Labels the y-axis of the second subplot as 'Acousticness (%)' with a font size of 14.
+
+  - **`Function:`** `axes[1].grid(True, linestyle='--', linewidth=0.7, alpha=0.5)`
+    - **`Description:`** Adds a grid to the second subplot with dashed lines, line width of 0.7, and alpha transparency of 0.5.
+
+  - **`Function:`** `plt.tight_layout()`
+    - **`Description:`** Adjusts the layout to ensure that subplots fit within the figure area without overlapping.
+
+  - **`Function:`** `plt.show()`
+    - **`Description:`** Displays the figure containing both scatter plots with regression lines.
 
 ## Code Breakdown:
 
 ##### *Part A:*
 ```python
+# Calculates the correlation matrix between 'streams', 'bpm', 'danceability_%', and 'energy_%' columns.
+correlation_matrix = Spotify_Data[['streams', 'bpm', 'danceability_%', 'energy_%']].corr()
 
+# Prints the correlation matrix to the console.
+print("Correlation matrix:\n")
+print(correlation_matrix, "\n")
+
+# Initializes a figure with size 8x6 inches for the heatmap.
+plt.figure(figsize=(8, 6))
+
+# Creates a heatmap to visualize the correlation matrix with annotations, using a coolwarm color palette.
+# Sets the color scale range from -1 to 1 to align with correlation coefficient values.
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)
+
+# Sets the title of the heatmap plot to "Correlation between Streams and Musical Attributes".
+plt.title('Correlation between Streams and Musical Attributes')
+
+# Displays the heatmap plot.
+plt.show()
 ```
 
 ##### *Part B:*
 ```python
+# Calculates the correlation between 'danceability_%' and 'energy_%' columns.
+dance_energy_corr = Spotify_Data['danceability_%'].corr(Spotify_Data['energy_%'])
 
+# Prints the correlation coefficient between Danceability and Energy, formatted to two decimal places.
+print(f"Correlation between Danceability and Energy: {dance_energy_corr:.2f}")
+
+# Calculates the correlation between 'valence_%' and 'acousticness_%' columns.
+valence_acoustic_corr = Spotify_Data['valence_%'].corr(Spotify_Data['acousticness_%'])
+
+# Prints the correlation coefficient between Valence and Acousticness, formatted to two decimal places.
+print(f"Correlation between Valence and Acousticness: {valence_acoustic_corr:.2f}")
+
+# Initializes a side-by-side subplot with 1 row and 2 columns for scatter plots.
+fig, axes = plt.subplots(1, 2, figsize=(18, 8))
+
+# Creates a scatter plot with a regression line for Danceability vs Energy.
+# Sets custom color, size, and transparency for scatter points, and style for the regression line.
+sns.regplot(x='danceability_%', y='energy_%', data=Spotify_Data, 
+            scatter_kws={'s': 50, 'alpha': 0.5, 'color': 'darkblue'}, 
+            line_kws={'color': 'red', 'linewidth': 2}, ax=axes[0])
+
+# Sets the title, x-axis label, and y-axis label for the Danceability vs Energy scatter plot.
+axes[0].set_title('Danceability vs Energy', fontsize=18)
+axes[0].set_xlabel('Danceability (%)', fontsize=14)
+axes[0].set_ylabel('Energy (%)', fontsize=14)
+
+# Adds a grid to the first plot with a dashed line style and adjusts transparency and line width.
+axes[0].grid(True, linestyle='--', linewidth=0.7, alpha=0.5)
+
+# Creates a scatter plot with a regression line for Valence vs Acousticness.
+# Sets custom color, size, and transparency for scatter points, and style for the regression line.
+sns.regplot(x='valence_%', y='acousticness_%', data=Spotify_Data, 
+            scatter_kws={'s': 50, 'alpha': 0.5, 'color': 'darkgreen'}, 
+            line_kws={'color': 'orange', 'linewidth': 2}, ax=axes[1])
+
+# Sets the title, x-axis label, and y-axis label for the Valence vs Acousticness scatter plot.
+axes[1].set_title('Valence vs Acousticness', fontsize=18)
+axes[1].set_xlabel('Valence (%)', fontsize=14)
+axes[1].set_ylabel('Acousticness (%)', fontsize=14)
+
+# Adds a grid to the second plot with a dashed line style and adjusts transparency and line width.
+axes[1].grid(True, linestyle='--', linewidth=0.7, alpha=0.5)
+
+# Adjusts the layout to make the plots fit nicely within the figure area.
+plt.tight_layout()
+
+# Displays the scatter plots side by side.
+plt.show()
 ```
 
 ## Expected Output:
 
 ##### *Part A:*
+
+![image](https://github.com/user-attachments/assets/eba61b48-30d9-45c7-be94-4aa7d4c7ca81)
+
 ##### *Part B:*
 
+![image](https://github.com/user-attachments/assets/b4577cd4-622d-42c3-80f4-5e1d1833618c)
 
 ---
 
@@ -629,9 +972,84 @@ Number of tracks released in that month: 134
 ## Functions to be Used:
 
 ##### *Part A:*
+  - **`Function:`** `Spotify_Data['in_spotify_playlists'].sum()`
+    - **`Description:`** Calculates the total count of tracks appearing in Spotify playlists by summing the values in the 'in_spotify_playlists' column.
+
+  - **`Function:`** `Spotify_Data['in_deezer_playlists'].sum()`
+    - **`Description:`** Calculates the total count of tracks appearing in Deezer playlists by summing the values in the 'in_deezer_playlists' column.
+
+  - **`Function:`** `Spotify_Data['in_apple_playlists'].sum()`
+    - **`Description:`** Calculates the total count of tracks appearing in Apple playlists by summing the values in the 'in_apple_playlists' column.
+
+  - **`Function:`** `print("Number of Tracks in Each Platform's Playlist:")`
+    - **`Description:`** Displays a label for the output of the platform counts.
+
+  - **`Function:`** `print(platform_counts, "\n")`
+    - **`Description:`** Prints the dictionary `platform_counts`, showing the number of tracks on each platform's playlist, followed by a newline for spacing.
+
+  - **`Function:`** `Spotify_Data.groupby(['in_spotify_playlists', 'in_deezer_playlists', 'in_apple_playlists'])['streams'].mean()`
+    - **`Description:`** Groups the data by whether a track appears on each platform’s playlist and calculates the mean number of streams for each group.
+
+  - **`Function:`** `print("\nMean Streams Per Platform:\n", mean_streams_per_platform, "\n")`
+    - **`Description:`** Prints a label and the mean streams for each platform group, followed by newlines for spacing.
+
+  - **`Function:`** `plt.figure(figsize=(10, 6))`
+    - **`Description:`** Initializes a new figure for the bar chart with a size of 10 by 6 inches.
+
+  - **`Function:`** `plt.bar(platform_counts.keys(), platform_counts.values(), color=['#1DB954', '#FF0000', '#A2AAAD'])`
+    - **`Description:`** Creates a bar chart with platform names as labels (x-axis) and track counts as values (y-axis), using specified colors for each bar.
+
+  - **`Function:`** `plt.title("Number of Tracks Listed on Each Platform's Playlist", fontsize=14, fontweight='bold')`
+    - **`Description:`** Sets the title of the bar chart with font size 14 and bold font weight.
+
+  - **`Function:`** `plt.xlabel("Platform", fontsize=12)`
+    - **`Description:`** Sets the x-axis label to 'Platform' with font size 12.
+
+  - **`Function:`** `plt.ylabel("Number of Tracks", fontsize=12)`
+    - **`Description:`** Sets the y-axis label to 'Number of Tracks' with font size 12.
+
+  - **`Function:`** `plt.text(bar.get_x() + bar.get_width() / 2, yval + 5, int(yval), ha='center', va='bottom', fontsize=12)`
+    - **`Description:`** Adds the track count on top of each bar in the chart for better readability.
+      - **`bar.get_x() + bar.get_width() / 2`** – Centers the text horizontally on top of each bar.
+      - **`yval + 5`** – Positions the text slightly above the bar.
+      - **`int(yval)`** – Converts the track count value to an integer.
+      - **`ha='center'`** and **`va='bottom'`** – Aligns the text horizontally centered and vertically at the bottom.
+      - **`fontsize=12`** – Sets font size of the text to 12.
+
+  - **`Function:`** `plt.grid(True, axis='y', linestyle='--', alpha=0.7)`
+    - **`Description:`** Adds a horizontal grid to the plot, with a dashed line style and adjusted transparency.
+
+  - **`Function:`** `plt.show()`
+    - **`Description:`** Displays the bar chart.
+
+
 ##### *Part B:*
+  - **`Function:`** `Spotify_Data.melt(id_vars=['streams'], value_vars=['in_spotify_playlists', 'in_deezer_playlists', 'in_apple_playlists'], var_name='Platform', value_name='In_Playlist')`
+    - **`Description:`** Converts `Spotify_Data` into long-form format, keeping 'streams' as an identifier variable and transforming the playlist columns ('in_spotify_playlists', 'in_deezer_playlists', 'in_apple_playlists') into a new variable named 'Platform' with the corresponding values under 'In_Playlist'.
 
+  - **`Function:`** `plt.figure(figsize=(10, 6))`
+    - **`Description:`** Initializes a new figure for the box plot with a size of 10 by 6 inches.
 
+  - **`Function:`** `sns.boxplot(x='Platform', y='streams', data=melted_data, hue='Platform', palette='Set3')`
+    - **`Description:`** Creates a box plot to visualize the distribution of 'streams' across different 'Platform' values, with color variation for each platform using the 'Set3' color palette.
+
+  - **`Function:`** `plt.title('Distribution of Streams per Platform', fontsize=16)`
+    - **`Description:`** Sets the title of the box plot to 'Distribution of Streams per Platform' with font size 16.
+
+  - **`Function:`** `plt.xlabel('Platform', fontsize=14)`
+    - **`Description:`** Sets the x-axis label to 'Platform' with font size 14.
+
+  - **`Function:`** `plt.ylabel('Streams', fontsize=14)`
+    - **`Description:`** Sets the y-axis label to 'Streams' with font size 14.
+
+  - **`Function:`** `plt.grid(visible=True, linestyle='--', linewidth=0.5)`
+    - **`Description:`** Adds a visible grid to the plot with dashed lines and a line width of 0.5 for better readability.
+
+  - **`Function:`** `plt.tight_layout()`
+    - **`Description:`** Adjusts the layout to ensure the plot fits within the figure space without overlapping elements.
+
+  - **`Function:`** `plt.show()`
+    - **`Description:`** Displays the box plot.
 
 ## Code Breakdown:
 
@@ -648,7 +1066,12 @@ Number of tracks released in that month: 134
 ## Expected Output:
 
 ##### *Part A:*
+
+![image](https://github.com/user-attachments/assets/b7e03bd1-5646-4eeb-9ce0-6333f295a22c)
+
 ##### *Part B:*
+
+![image](https://github.com/user-attachments/assets/88652c74-a605-45ce-91e1-eb645638715d)
 
 
 ---
@@ -674,8 +1097,155 @@ Number of tracks released in that month: 134
 
 
 ##### *Part A:*
-##### *Part B:*
+  - **`Function:`** `Spotify_Data.groupby(['key', 'mode']).agg()`
+    - **`Description:`** Groups the `Spotify_Data` DataFrame by 'key' and 'mode' (Major vs Minor), then aggregates the data by calculating the average of 'streams' and the count of 'streams' to get track counts for each group. The aggregation is reset into a new DataFrame.
 
+  - **`Function:`** `print("Patterns based on key and mode:")`
+    - **`Description:`** Prints a message indicating that the patterns based on 'key' and 'mode' are about to be displayed.
+
+  - **`Function:`** `print(key_mode_streams, "\n")`
+    - **`Description:`** Prints the `key_mode_streams` DataFrame, which contains the calculated average streams and track count for each 'key' and 'mode' combination.
+
+  - **`Function:`** `plt.figure(figsize=(12, 6))`
+    - **`Description:`** Creates a new figure with the specified size of 12 inches by 6 inches to display the plots.
+
+  - **`Function:`** `plt.subplot(1, 2, 1)`
+    - **`Description:`** Creates the first subplot (1 row, 2 columns) for plotting the average streams by 'key' and 'mode'.
+
+  - **`Function:`** `sns.barplot(x='key', y='streams', hue='mode', data=key_mode_streams, palette='viridis')`
+    - **`Description:`** Creates a bar plot that shows the average streams by 'key' and 'mode' using the 'viridis' color palette. The 'hue' parameter allows the bars to be color-coded by the 'mode' (Major/Minor).
+
+  - **`Function:`** `plt.title('Average Streams by Key and Mode')`
+    - **`Description:`** Adds a title to the first subplot indicating that the plot shows the average streams by 'key' and 'mode'.
+
+  - **`Function:`** `plt.xlabel('Key')`
+    - **`Description:`** Labels the x-axis of the first subplot as 'Key'.
+
+  - **`Function:`** `plt.ylabel('Average Streams')`
+    - **`Description:`** Labels the y-axis of the first subplot as 'Average Streams'.
+
+  - **`Function:`** `plt.subplot(1, 2, 2)`
+    - **`Description:`** Creates the second subplot (1 row, 2 columns) for plotting the track count by 'key' and 'mode'.
+
+  - **`Function:`** `sns.barplot(x='key', y='track_count', hue='mode', data=key_mode_streams, palette='coolwarm')`
+    - **`Description:`** Creates a bar plot that shows the track count by 'key' and 'mode' using the 'coolwarm' color palette. The 'hue' parameter color-codes the bars by the 'mode' (Major/Minor).
+
+  - **`Function:`** `plt.title('Track Count by Key and Mode')`
+    - **`Description:`** Adds a title to the second subplot indicating that the plot shows the track count by 'key' and 'mode'.
+
+  - **`Function:`** `plt.xlabel('Key')`
+    - **`Description:`** Labels the x-axis of the second subplot as 'Key'.
+
+  - **`Function:`** `plt.ylabel('Track Count')`
+    - **`Description:`** Labels the y-axis of the second subplot as 'Track Count'.
+
+  - **`Function:`** `plt.tight_layout()`
+    - **`Description:`** Adjusts the layout of the subplots to ensure they fit well within the figure without overlap.
+
+  - **`Function:`** `plt.show()`
+    - **`Description:`** Displays the final figure containing both the bar plots for average streams and track count by 'key' and 'mode'.
+
+##### *Part A.1: 
+  - **`Function:`** `import matplotlib.pyplot as plt`
+    - **`Description:`** Imports the `matplotlib.pyplot` module, which is used for creating plots and visualizations.
+
+  - **`Function:`** `import seaborn as sns`
+    - **`Description:`** Imports the `seaborn` library, which provides a high-level interface for drawing attractive statistical graphics.
+
+  - **`Function:`** `Spotify_Data.groupby('key')['streams'].mean()`
+    - **`Description:`** Groups the `Spotify_Data` DataFrame by the 'key' column and calculates the mean of 'streams' for each group, providing the average streams per musical key.
+
+  - **`Function:`** `plot_data = avg_streams_by_key.reset_index()`
+    - **`Description:`** Resets the index of the `avg_streams_by_key` Series, converting it into a DataFrame, and makes 'key' a regular column instead of the index.
+
+  - **`Function:`** `plot_data['key'] = plot_data['key'].astype(str)`
+    - **`Description:`** Converts the 'key' column of `plot_data` to a string data type for better display and plotting purposes.
+
+  - **`Function:`** `plt.figure(figsize=(10, 8))`
+    - **`Description:`** Creates a new figure for plotting with a specified size of 10 inches by 8 inches.
+
+  - **`Function:`** `sns.barplot(data=plot_data, x='key', y='streams', palette='viridis', hue='key', dodge=False)`
+    - **`Description:`** Creates a bar plot using Seaborn, where the x-axis represents 'key', the y-axis represents the average 'streams', and the bars are color-coded by 'key' using the 'viridis' color palette. The `hue='key'` argument ensures that each key is color-coded uniquely, while `dodge=False` ensures the bars are not separated by the hue categories.
+
+  - **`Function:`** `plt.xlabel('Musical Key')`
+    - **`Description:`** Adds the label "Musical Key" to the x-axis of the plot.
+
+  - **`Function:`** `plt.ylabel('Average Streams')`
+    - **`Description:`** Adds the label "Average Streams" to the y-axis of the plot.
+
+  - **`Function:`** `plt.title('Average Streams by Musical Key')`
+    - **`Description:`** Sets the title of the plot to "Average Streams by Musical Key".
+
+  - **`Function:`** `plt.legend([], [], frameon=False)`
+    - **`Description:`** Hides the legend in the plot by passing empty lists for the legend handles and labels and setting `frameon=False` to avoid displaying a legend box.
+
+  - **`Function:`** `plt.show()`
+    - **`Description:`** Displays the final plot on the screen after all adjustments and customizations.
+
+##### *Part A.2:
+  - **`Function:`** `Spotify_Data.groupby('mode')['streams'].mean().reset_index()`
+    - **`Description:`** Groups the `Spotify_Data` DataFrame by the 'mode' column (Major vs Minor) and calculates the average of 'streams' for each group. It then resets the index to turn the result into a DataFrame.
+
+  - **`Function:`** `plt.figure(figsize=(10, 8))`
+    - **`Description:`** Creates a new figure for plotting with a specified size of 10 inches by 8 inches.
+
+  - **`Function:`** `sns.barplot(data=avg_streams_by_mode, x='mode', y='streams', palette='coolwarm', hue='mode', dodge=False)`
+    - **`Description:`** Creates a bar plot using Seaborn, where the x-axis represents 'mode' (0 = Minor, 1 = Major), the y-axis represents the average 'streams', and the bars are color-coded by 'mode' using the 'coolwarm' color palette. The `dodge=False` ensures that the bars are not separated by the hue categories.
+
+  - **`Function:`** `plt.xlabel('Mode (0 = Minor, 1 = Major)')`
+    - **`Description:`** Adds the label "Mode (0 = Minor, 1 = Major)" to the x-axis of the plot.
+
+  - **`Function:`** `plt.ylabel('Average Streams')`
+    - **`Description:`** Adds the label "Average Streams" to the y-axis of the plot.
+
+  - **`Function:`** `plt.title('Average Streams by Mode')`
+    - **`Description:`** Sets the title of the plot to "Average Streams by Mode".
+
+  - **`Function:`** `plt.xticks([0, 1], ['Minor', 'Major'])`
+    - **`Description:`** Customizes the x-axis tick labels, setting them to 'Minor' for 0 and 'Major' for 1 to represent the music modes.
+
+  - **`Function:`** `plt.legend([], [], frameon=False)`
+    - **`Description:`** Hides the legend by passing empty lists for the legend handles and labels and setting `frameon=False` to avoid displaying a legend box.
+
+  - **`Function:`** `plt.show()`
+    - **`Description:`** Displays the final plot on the screen after all adjustments and customizations.
+
+##### *Part B:*
+  - **`Function:`** `Spotify_Data.groupby('artist(s)_name')[['in_spotify_playlists', 'in_deezer_playlists', 'in_apple_playlists', 'in_spotify_charts', 'in_apple_charts', 'in_deezer_charts', 'in_shazam_charts']].sum().reset_index()`
+    - **`Description:`** Groups the `Spotify_Data` DataFrame by the 'artist(s)_name' column, then sums the appearance counts for each artist across multiple playlists and chart columns. The `reset_index()` function returns the result as a DataFrame instead of a grouped object.
+
+  - **`Function:`** `artist_playlist_counts[['in_spotify_playlists', 'in_deezer_playlists', 'in_apple_playlists', 'in_spotify_charts', 'in_apple_charts', 'in_deezer_charts', 'in_shazam_charts']].sum(axis=1)`
+    - **`Description:`** Sums the appearances across multiple columns (playlists and charts) for each artist and stores the result in the 'total_appearances' column.
+
+  - **`Function:`** `artist_playlist_counts.sort_values(by='total_appearances', ascending=False).head(10)`
+    - **`Description:`** Sorts the `artist_playlist_counts` DataFrame by the 'total_appearances' column in descending order and selects the top 10 artists based on total appearances.
+
+  - **`Function:`** `plt.figure(figsize=(14, 8))`
+    - **`Description:`** Creates a new figure for plotting with a specified size of 14 inches by 8 inches.
+
+  - **`Function:`** `sns.barplot(data=top_artists, x='artist(s)_name', y='total_appearances', hue='artist(s)_name', palette='Set3', dodge=False)`
+    - **`Description:`** Creates a bar plot using Seaborn, where the x-axis represents the 'artist(s)_name', the y-axis represents the 'total_appearances', and the bars are color-coded by 'artist(s)_name' using the 'Set3' color palette. `dodge=False` ensures that the bars for each artist are not separated.
+
+  - **`Function:`** `plt.xlabel('Artist(s) Name')`
+    - **`Description:`** Adds the label "Artist(s) Name" to the x-axis of the plot.
+
+  - **`Function:`** `plt.ylabel('Total Appearances in Playlists and Charts')`
+    - **`Description:`** Adds the label "Total Appearances in Playlists and Charts" to the y-axis of the plot.
+
+  - **`Function:`** `plt.title('Top 10 Artists by Total Appearances in Playlists and Charts')`
+    - **`Description:`** Sets the title of the plot to "Top 10 Artists by Total Appearances in Playlists and Charts".
+
+  - **`Function:`** `plt.xticks(rotation=45, ha='right')`
+    - **`Description:`** Rotates the x-axis labels by 45 degrees and aligns them to the right for better readability.
+
+  - **`Function:`** `plt.show()`
+    - **`Description:`** Displays the final plot after all adjustments and customizations.
+
+  - **`Function:`** `artist_playlist_counts.set_index('artist(s)_name')[['in_spotify_playlists', 'in_deezer_playlists', 'in_apple_playlists', 'in_spotify_charts', 'in_apple_charts', 'in_deezer_charts', 'in_shazam_charts', 'total_appearances']]`
+    - **`Description:`** Sets the 'artist(s)_name' as the index and selects the columns related to playlist and chart appearances, including the total appearances, for further analysis.
+
+  - **`Function:`** `print(detailed_appearances.sort_values(by='total_appearances', ascending=False).head(10))`
+    - **`Description:`** Displays the top 10 artists' detailed appearance counts, sorted by 'total_appearances', in a clean and readable table format.
 
 
 ## Code Breakdown:
@@ -693,8 +1263,47 @@ Number of tracks released in that month: 134
 ## Expected Output:
 
 ##### *Part A:*
+```python
+Patterns based on key and mode:
+   key   mode           streams  track_count
+0    A  Major  401960332.585366           42
+1    A  Minor  417390630.969697           33
+2   A#  Major  627533592.148148           27
+3   A#  Minor       484923094.2           30
+4    B  Major  436333624.942857           35
+5    B  Minor   582511036.23913           46
+6   C#  Major   628588294.20548           73
+7   C#  Minor  566525199.276596           47
+8    D  Major  572017994.909091           66
+9    D  Minor  342558842.066667           15
+10  D#  Major  681962300.166667           12
+11  D#  Minor  479364677.285714           21
+12   E  Major  760596278.764706           17
+13   E  Minor  508326422.044444           45
+14   F  Major       527931052.5           44
+15   F  Minor  410283606.888889           45
+16  F#  Major  417544999.566667           30
+17  F#  Minor  595492093.883721           43
+18   G  Major  492981262.454545           66
+19   G  Minor       363759305.7           30
+20  G#  Major  545804415.190476           63
+21  G#  Minor  321903624.357143           28 
+```
+
+![image](https://github.com/user-attachments/assets/a3a1e504-143d-4c20-bc21-36bc6c2f587d)
+
+##### *Part A.1:*
+
+![image](https://github.com/user-attachments/assets/53086366-d4aa-4518-8dc9-a7bacecb7654)
+
+##### *Part A.2:*
+
+![image](https://github.com/user-attachments/assets/37e5c81e-dadb-4211-b9cc-6df4f98b83ff)
+
 ##### *Part B:*
 
+![image](https://github.com/user-attachments/assets/5917aa4b-ec4d-4673-af40-90e17895022f)
+![image](https://github.com/user-attachments/assets/95528014-f260-4824-a71b-d242bf6f5176)
 
 ---
 
