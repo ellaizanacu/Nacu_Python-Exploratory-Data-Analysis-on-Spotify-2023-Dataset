@@ -978,9 +978,9 @@ plt.show()
 ![image](https://github.com/user-attachments/assets/b4577cd4-622d-42c3-80f4-5e1d1833618c)
 
 ## Insights:
-Analyzing the correlation between streams and various musical attributes, it appears that none of the attributes, including bpm, danceability_%, and energy_%, show a strong influence on streaming numbers. The correlation coefficients for these attributes with streams are all close to zero, with danceability_% having the highest (though still weak) negative correlation of -0.11. This suggests that these musical features do not significantly impact a song's popularity on streaming platforms. The low correlations imply that other factors, such as artist popularity, marketing, or playlist placement, may play a more substantial role in driving streams.
+Analyzing the correlation between streams and various musical attributes, it seems that none of the attributes, including bpm, danceability_%, and energy_%, show a strong influence on streaming numbers. The correlation coefficients for these attributes with streams are all close to zero, with danceability_% having the highest (though still weak) negative correlation of -0.11. This suggests that these musical features do not significantly impact a song's popularity on streaming platforms. The low correlations imply that other factors, such as artist popularity, marketing, or playlist placement, may play a more substantial role in driving streams.
 
-When looking at the relationship between danceability_% and energy_%, there is a mild positive correlation of 0.20, indicating that tracks with higher energy tend to be slightly more danceable, though the relationship is not particularly strong. On the other hand, valence_% and acousticness_% show a weak negative correlation of -0.08, suggesting that acoustic tracks tend to be slightly less cheerful or "positive" in tone, but this relationship is also minimal. Overall, while there are some minor correlations, these attributes do not exhibit strong dependencies on each other, nor do they have a significant impact on streaming performance.
+When looking at the relationship between danceability_% and energy_%, there is a mild positive correlation of 0.20, indicating that tracks with higher energy tend to be slightly more danceable, though the relationship is not particularly strong. On the other hand, valence_% and acousticness_% show a weak negative correlation of -0.08, suggesting that acoustic tracks tend to be slightly less cheerful or "positive" in tone, but this relationship is also minimal. Overall, while there are some minor correlations, these attributes do not exhibit strong dependencies on each other.
 
 ---
 
@@ -1179,6 +1179,10 @@ plt.show()  # Displays the box plot.
 
 ![image](https://github.com/user-attachments/assets/88652c74-a605-45ce-91e1-eb645638715d)
 
+## Insights:
+Examining the number of tracks across playlists on different platforms reveals that Spotify has a significant lead in promoting popular tracks. With 4,955,719 tracks featured in Spotify playlists, it far surpasses Apple with only 64,625 tracks and Deezer with 367,084 tracks. This disparity highlights Spotify's extensive playlist ecosystem, suggesting that it provides more opportunities for tracks to gain visibility through playlist placements.
+
+Looking at the mean streams per platform, tracks that appear in Spotify playlists also tend to have high stream counts, reinforcing the idea that Spotify's playlists are influential in driving track popularity. Although Apple and Deezer have smaller playlist counts, tracks on these platforms still achieve substantial streams, indicating that while their reach is more limited, they do contribute meaningfully to an artist’s overall streaming numbers. Ultimately, Spotify seems to be the most supportive of popular tracks, both in terms of playlist inclusion and the potential for higher streams.
 
 ---
 
@@ -1579,12 +1583,19 @@ Patterns based on key and mode:
 ![image](https://github.com/user-attachments/assets/5917aa4b-ec4d-4673-af40-90e17895022f)
 ![image](https://github.com/user-attachments/assets/95528014-f260-4824-a71b-d242bf6f5176)
 
+## Insights:
+Based on the data, we can observe interesting patterns related to musical keys, modes (Major vs. Minor), and artist popularity across playlists and charts. For tracks in different keys and modes, there is a clear trend that suggests certain keys, particularly those in Major modes like D# Major, E Major, and C# Major, tend to achieve higher average streams. This may indicate a preference among listeners for tracks in these keys, as E Major, for instance, shows the highest average streams, potentially signaling its favorable resonance with audiences. Meanwhile, in terms of track count, keys like C# and G# Major stand out with a higher number of tracks overall. This suggests that artists frequently compose songs in these keys, possibly because they align well with popular genres or broader listener appeal. While Major keys generally show slightly higher average streams, some Minor keys, such as B Minor and F# Minor, also have a significant number of tracks, suggesting that artists do not strictly prefer Major modes but vary their choices by key.
+
+In terms of artist popularity, a few names dominate the top ranks for appearances across playlists and charts. The Weeknd, Ed Sheeran, and Taylor Swift consistently appear as the most frequently playlisted artists across major platforms like Spotify, Apple, Deezer, and Shazam, which highlights their sustained popularity and strong fan engagement. This high frequency in playlists and charts points to their ability to capture diverse listener demographics and maintain a solid presence in curated music spaces. Additionally, platform-specific patterns emerge for artists such as Eminem and Arctic Monkeys, who are more prominent on Spotify and Deezer than on other platforms, hinting at certain audience preferences on those services. Conversely, artists like Taylor Swift and The Weeknd display balanced appearances across all platforms, emphasizing their broad, cross-platform appeal.
+
+One noteworthy insight is that artists like Dr. Dre and Snoop Dogg, while not as frequently appearing in overall counts, have high visibility on Shazam charts. This could indicate a unique "discovery" factor associated with their music, where listeners are actively searching for their songs—possibly due to trending or viral exposure. In conclusion, this analysis reveals that certain Major keys, like D# and E, tend to attract higher streams, making them potentially favorable choices for artists aiming to reach larger audiences. Similarly, top artists such as The Weeknd and Ed Sheeran have a remarkable ability to maintain relevance across platforms, reinforcing their positions as some of the most popular and widely streamed musicians today.
+
 ---
 
-This analysis provides comprehensive insights into the trends and characteristics of popular music tracks, helping to understand what factors contribute to higher stream counts, and how musical attributes and platforms play a role in shaping listener preferences.
+## **Overall Conclusion:**
+This analysis reveals that both musical elements and artist popularity play key roles in determining a track’s success. Songs in certain Major keys, like D# and E Major, tend to have higher average streams, hinting that these keys might appeal more to listeners. While Major modes show slightly higher popularity overall, Minor keys like B Minor and F# Minor also attract many tracks, reflecting diverse tastes. Top artists such as The Weeknd, Ed Sheeran, and Taylor Swift appear frequently across playlists and charts on platforms like Spotify, Apple Music, and Shazam, showcasing their strong cross-platform appeal. Additionally, Spotify emerges as a particularly influential platform, featuring more tracks in playlists and driving higher stream counts compared to Apple and Deezer. Platform-specific patterns are also notable—artists like Eminem and Arctic Monkeys are especially popular on Spotify and Deezer, while Dr. Dre and Snoop Dogg rank highly on Shazam, suggesting their music has strong "discovery" appeal.
 
-### **Overall Conclusion**:
-This experiment effectively demonstrates how to filter, transform, and visualize data using Python’s powerful pandas and seaborn libraries. Each problem showcases the ability to manipulate datasets to derive meaningful insights through data wrangling and visualization techniques.
+In summary, streaming success is shaped by a combination of musical composition, artist strategy, and platform visibility. Artists aiming for greater reach can benefit from crafting songs in popular keys and focusing on visibility across multiple platforms, with Spotify playing a central role in boosting track exposure.
 
 ---
 
