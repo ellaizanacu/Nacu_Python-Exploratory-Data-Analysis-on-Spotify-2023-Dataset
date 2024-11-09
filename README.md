@@ -215,6 +215,12 @@ apple_playlists        0
 dtype: int64
 ```
 
+## Insights:
+
+The dataset contains 953 rows and 24 columns, with each row representing a unique track and each column providing various details such as track names, artist information, musical attributes, release details, and streaming data. The columns include a mix of numerical (e.g., streams, artist_count, released_year, bpm, danceability_%, etc.) and categorical (e.g., track_name, artist(s)_name, key, mode) data types.
+
+Regarding missing values, there are a few important observations. The streams column has one missing value for the track "Love Grows (Where My Rosemary Goes)", which has been intentionally set to NaN to ensure the accuracy of the analysis. Aside from this, there are missing values in the key (95 missing values) and in_shazam_charts (50 missing values) columns. These missing values are relatively sparse and suggest that some tracks might not have a defined key or lack data for the Shazam charts. 
+
 --- 
 
 ## Basic Descriptive Statistics
@@ -414,6 +420,11 @@ plt.show()
 
 ###### *Note: Only the `streams` column for "Love Grows (Where My Rosemary Goes)" is treated as `NaN`, ensuring other columns retain their original values.*
 
+## Insights:
+For the streams column, the mean number of streams is approximately 514,137,425, with a median of 290,530,915. The standard deviation is very high at approximately 566,856,949, indicating significant variability in the streams across the tracks. This suggests that while there are some tracks with extraordinarily high stream counts, many tracks have much lower stream numbers, which is typical in a dataset with a mix of popular and lesser-known tracks.
+
+Regarding the released_year column, the majority of the tracks were released in recent years, specifically in the 2020s, as indicated by the median value of 2022 and the range from 1930 to 2023. This reflects a modern trend in the dataset, with the most significant number of tracks being released in the past decade. While, for artist_count, the mean is approximately 1.56, with most tracks featuring 1 or 2 artists (25th percentile: 1, 75th percentile: 2). The maximum value of 8 artists is an outlier compared to the majority of tracks that have fewer collaborators. This suggests that most tracks are single-artist, with a smaller proportion featuring multiple artists. In summary, the streams column exhibits high variability, while the released_year and artist_count distributions follow expected patterns, with recent years dominating and most tracks featuring one or two artists. 
+
 ---
 
 ## Top Performers
@@ -571,6 +582,11 @@ plt.show()
 ##### *Part B:*
 
 ![image](https://github.com/user-attachments/assets/6b7a0335-ae52-4adf-8ef3-f0fc43c8de6c)
+
+## Insights:
+The track with the highest number of streams in the dataset is "Blinding Lights" by The Weeknd, with a remarkable 3.7 billion streams. This song tops the list of the top 5 most streamed tracks, showcasing its global popularity and cultural impact. Following closely are Ed Sheeran’s "Shape of You" with 3.56 billion streams, and "Someone You Loved" by Lewis Capaldi, amassing 2.88 billion streams. Other notable mentions include "Dance Monkey" by Tones and I, with 2.86 billion streams, and "Sunflower" by Post Malone and Swae Lee from the *Spider-Man: Into the Spider-Verse* soundtrack, which has reached 2.8 billion streams. These songs reflect diverse genres and styles, highlighting the wide-reaching appeal of each track. Additionally, "Love Grows (Where My Rosemary Goes)" was found to have missing stream data, thus it did not appear in this ranking.
+
+In terms of artist frequency, Taylor Swift leads the dataset with 34 tracks, underscoring her prolific output and consistent popularity across various album releases. The Weeknd follows with 22 tracks, reinforcing his widespread acclaim, particularly through his chart-topping singles. Bad Bunny and SZA each appear 19 times, showcasing their significant contributions to Latin and R&B genres, respectively. Finally, Harry Styles rounds out the top five with 17 tracks, reflecting his success as a solo artist after transitioning from One Direction. The prominence of these artists suggests that frequent releases from high-demand artists resonate with audiences, establishing a strong presence on streaming platforms and shaping music trends.
 
 ---
 
@@ -772,6 +788,11 @@ Month with the most releases: Jan
 Number of tracks released in that month: 134
 ```
 
+## Insights:
+The number of tracks released over time shows a significant upward trend, especially in recent years. As seen in the plot, the number of tracks remained relatively low and stable from the 1930s to around the 2000s, with only small fluctuations. However, starting in the 2010s, there was a noticeable increase, reaching a peak in 2022 with over 400 tracks released, marking it as the most prolific year in the dataset. This spike in recent years could reflect the ease of digital music distribution and streaming platforms, making it simpler for artists to release music more frequently and reach larger audiences.
+
+When examining the monthly release patterns, January stands out as the month with the most track releases, totaling 134 tracks. This suggests that the start of the year might be a popular time for new releases, possibly due to strategic timing, as artists and record labels aim to capture listener interest after the holiday season. Overall, while annual releases have grown dramatically, there seems to be a particular emphasis on releasing music at the beginning of the calendar year.
+
 ---
 
 ## Genre and Music Characteristics
@@ -955,6 +976,11 @@ plt.show()
 ##### *Part B:*
 
 ![image](https://github.com/user-attachments/assets/b4577cd4-622d-42c3-80f4-5e1d1833618c)
+
+## Insights:
+Analyzing the correlation between streams and various musical attributes, it appears that none of the attributes, including bpm, danceability_%, and energy_%, show a strong influence on streaming numbers. The correlation coefficients for these attributes with streams are all close to zero, with danceability_% having the highest (though still weak) negative correlation of -0.11. This suggests that these musical features do not significantly impact a song's popularity on streaming platforms. The low correlations imply that other factors, such as artist popularity, marketing, or playlist placement, may play a more substantial role in driving streams.
+
+When looking at the relationship between danceability_% and energy_%, there is a mild positive correlation of 0.20, indicating that tracks with higher energy tend to be slightly more danceable, though the relationship is not particularly strong. On the other hand, valence_% and acousticness_% show a weak negative correlation of -0.08, suggesting that acoustic tracks tend to be slightly less cheerful or "positive" in tone, but this relationship is also minimal. Overall, while there are some minor correlations, these attributes do not exhibit strong dependencies on each other, nor do they have a significant impact on streaming performance.
 
 ---
 
