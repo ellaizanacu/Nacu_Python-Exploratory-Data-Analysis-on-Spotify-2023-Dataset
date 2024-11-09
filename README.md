@@ -788,7 +788,10 @@ Number of tracks released in that month: 134
 
 ## Approach:
 ##### *Part A:*
+- Use correlation analysis with `pandas` and `seaborn` to calculate and visualize the relationship between `streams` and each musical attribute (bpm, danceability, energy).
+
 ##### *Part B:*
+- Calculate the correlation between danceability_% and energy_%, and between valence_% and acousticness_%, followed by side-by-side scatter plots with regression lines to visualize these relationships. The regression lines will help identify any linear correlations between the variables.
 
 ## Functions to be Used:
 
@@ -966,8 +969,13 @@ plt.show()
 
 ## Approach:
 ##### *Part A:*
-##### *Part B:*
+  - Compute the total number of tracks listed in playlists for each platform (Spotify, Deezer, and Apple).
+  - Calculate the average streams for each platform by grouping the data based on tracks listed on each platform's playlists.
+  - Visualize the results using bar charts: one to show the track counts for each platform, and another to check which platform 
 
+##### *Part B:*
+  - Reshape the data using `melt()` to focus on tracks in the playlists of each platform.
+  - Use a boxplot to show the distribution of streams across platforms, revealing which platform has higher or lower average streams for the tracks.
 
 ## Functions to be Used:
 
@@ -1055,12 +1063,84 @@ plt.show()
 
 ##### *Part A:*
 ```python
+# Count the number of tracks appearing on each platform's playlist
+platform_counts = {
+    'Spotify': Spotify_Data['in_spotify_playlists'].sum(),  # Counts tracks in Spotify playlists by summing boolean values.
+    'Deezer': Spotify_Data['in_deezer_playlists'].sum(),    # Counts tracks in Deezer playlists by summing boolean values.
+    'Apple': Spotify_Data['in_apple_playlists'].sum()       # Counts tracks in Apple playlists by summing boolean values.
+}
 
+# Display the counts
+print("Number of Tracks in Each Platform's Playlist:")  # Prints a header to describe the upcoming data output.
+print(platform_counts, "\n")  # Displays the dictionary with track counts for each platform.
+
+# To check which platform favors the most popular tracks, calculate mean streams for each platform combination
+mean_streams_per_platform = Spotify_Data.groupby(['in_spotify_playlists', 'in_deezer_playlists', 'in_apple_playlists'])['streams'].mean()
+# Groups data by playlist inclusion across platforms and calculates the mean 'streams' for each combination.
+
+# Display the mean streams per platform
+print("\nMean Streams Per Platform:\n", mean_streams_per_platform, "\n")  # Prints the mean streams for each platform grouping.
+
+# Plot a bar chart to visualize the track counts for each platform
+plt.figure(figsize=(10, 6))  # Initializes a figure with dimensions 10x6 inches.
+bars = plt.bar(platform_counts.keys(), platform_counts.values(), color=['#1DB954', '#FF0000', '#A2AAAD'])
+# Plots a bar chart where each platform is a category, with platform colors representing Spotify, Deezer, and Apple.
+
+# Adding grid, title, and labels
+plt.title("Number of Tracks Listed on Each Platform's Playlist", fontsize=14, fontweight='bold')  # Sets the title with bold font.
+plt.xlabel("Platform", fontsize=12)  # Labels the x-axis as "Platform" with font size 12.
+plt.ylabel("Number of Tracks", fontsize=12)  # Labels the y-axis as "Number of Tracks" with font size 12.
+
+# Add exact values on top of each bar for better readability
+for bar in bars:
+    yval = bar.get_height()  # Gets the height of each bar to position the text.
+    plt.text(bar.get_x() + bar.get_width() / 2, yval + 5, int(yval), ha='center', va='bottom', fontsize=12)
+    # Places the count value above each bar, centered and slightly above the top, with font size 12.
+
+# Display grid for better readability
+plt.grid(True, axis='y', linestyle='--', alpha=0.7)  # Adds a dashed horizontal grid with transparency for readability.
+
+# Show the plot
+plt.show()  # Displays the bar chart.
 ```
 
 ##### *Part B:*
 ```python
+import pandas as pd      # Imports the pandas library for data manipulation.
+import seaborn as sns    # Imports the seaborn library for advanced data visualization.
+import matplotlib.pyplot as plt  # Imports matplotlib for plotting.
 
+# Calculate the correlation matrix for 'streams', 'bpm', 'danceability_%', and 'energy_%' columns.
+correlation_matrix = Spotify_Data[['streams', 'bpm', 'danceability_%', 'energy_%']].corr()
+
+# Print the correlation matrix to the console.
+print("Correlation matrix:\n")  # Prints a header to identify the correlation matrix output.
+print(correlation_matrix, "\n")  # Displays the correlation matrix.
+
+# Plot the correlation heatmap.
+plt.figure(figsize=(8, 6))  # Initializes a figure with dimensions 8x6 inches.
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1)  # Creates a heatmap with annotations and a coolwarm color palette.
+plt.title('Correlation between Streams and Musical Attributes')  # Sets the title of the heatmap.
+plt.show()  # Displays the heatmap plot.
+
+# Melt the DataFrame to long-form for plotting.
+melted_data = Spotify_Data.melt(id_vars=['streams'], 
+                                value_vars=['in_spotify_playlists', 'in_deezer_playlists', 'in_apple_playlists'], 
+                                var_name='Platform', value_name='In_Playlist')
+# Melts the DataFrame by keeping 'streams' as an identifier and converting playlist columns into a single 'Platform' column.
+# 'In_Playlist' contains boolean values indicating if a song is in a specific playlist.
+
+# Plotting the boxplot with hue to show distribution of streams per platform.
+plt.figure(figsize=(10, 6))  # Initializes a new figure with dimensions 10x6 inches for the boxplot.
+sns.boxplot(x='Platform', y='streams', data=melted_data, hue='Platform', palette='Set3')  # Creates a box plot for 'streams' distribution by platform.
+plt.title('Distribution of Streams per Platform', fontsize=16)  # Sets the title for the boxplot with font size 16.
+plt.xlabel('Platform', fontsize=14)  # Labels the x-axis as 'Platform' with font size 14.
+plt.ylabel('Streams', fontsize=14)  # Labels the y-axis as 'Streams' with font size 14.
+plt.grid(visible=True, linestyle='--', linewidth=0.5)  # Adds a dashed grid for improved readability.
+
+# Show the box plot.
+plt.tight_layout()  # Adjusts the plot layout to prevent overlapping elements.
+plt.show()  # Displays the box plot.
 ```
 
 ## Expected Output:
@@ -1089,12 +1169,32 @@ plt.show()
 - **Part B**: Do certain genres or artists consistently appear in more playlists or charts? Perform an analysis to compare the most frequently appearing artists in playlists or charts.
 
 ## Approach:
-##### *Part A:*
-##### *Part B:*
+##### *Part A:* 
+  - The dataset is grouped by both 'key' and 'mode' (Major vs. Minor), calculating two metrics:
+    - The **average streams** for each combination of key and mode.
+    - The **track count** for each key and mode group, which represents how many tracks fall under each category.
+  - Two subplots are created to visualize the relationships:
+    1. A **bar plot for average streams** by key and mode.
+    2. A **bar plot for track counts** by key and mode.
+  - The first plot uses the 'viridis' color palette, while the second uses the 'coolwarm' palette to distinguish between the two metrics visually.
 
+##### *Part A.1:*
+  - The dataset is grouped by the 'key' column to calculate the average streams for each key.
+  - The keys are then converted to strings for better readability when plotting.
+  - A bar plot is created using the `seaborn` library to visualize the average streams for each key, with the colors of the bars representing different keys. The `viridis` color palette is used to differentiate the keys in the plot.
+  - The plot includes the 'key' on the x-axis and 'average streams' on the y-axis, with the hue parameter applied to show the different keys with distinct colors.
+  - The legend is hidden since the hue is just for color differentiation and not necessary for understanding the chart.
+
+##### *Part A.2:*
+  - The dataset is grouped by the 'mode' column, where `0` represents Minor and `1` represents Major, to calculate the average streams for each mode.
+  - A bar plot is created using the `seaborn` library to visualize the average streams for each mode, with color applied using the `coolwarm` color palette to distinguish between Major and Minor.
+  - The x-axis displays the mode (Minor or Major), and the y-axis shows the average streams.
+  - The legend is hidden since the hue only adds color and doesn't provide additional meaningful information.
+
+##### *Part B:*
+- The data is grouped by artist and platform, and the total number of appearances for each artist is computed. Artists are then sorted based on their total appearances across all platforms in descending order. A bar chart is used to visualize the total appearances, where each bar represents the total appearances of each artist across all platforms. Missing values for artists that do not appear on certain platforms are treated as zero. The final results are displayed in a clear, readable table format.
 
 ## Functions to be Used:
-
 
 ##### *Part A:*
   - **`Function:`** `Spotify_Data.groupby(['key', 'mode']).agg()`
@@ -1252,12 +1352,160 @@ plt.show()
 
 ##### *Part A:*
 ```python
+# Import necessary libraries
+import matplotlib.pyplot as plt
+import seaborn as sns
 
+# Group the data by 'key' and 'mode' (Major vs Minor), and calculate both the average streams and the count of tracks for each group
+key_mode_streams = Spotify_Data.groupby(['key', 'mode']).agg(
+    streams=('streams', 'mean'),  # Calculate the average streams per key and mode combination
+    track_count=('streams', 'size')  # Count the number of tracks per key and mode combination
+).reset_index()
+
+# Display the patterns in key and mode
+print("Patterns based on key and mode:")
+print(key_mode_streams, "\n")
+
+# Initialize a figure with a size of 12x6 inches for the two subplots
+plt.figure(figsize=(12, 6))
+
+# First subplot: Plot Average Streams by Key and Mode
+plt.subplot(1, 2, 1)  # (1 row, 2 columns, first subplot)
+sns.barplot(x='key', y='streams', hue='mode', data=key_mode_streams, palette='viridis')
+plt.title('Average Streams by Key and Mode')  # Sets the title of the first subplot
+plt.xlabel('Key')  # Label for x-axis
+plt.ylabel('Average Streams')  # Label for y-axis
+
+# Second subplot: Plot Track Count by Key and Mode
+plt.subplot(1, 2, 2)  # (1 row, 2 columns, second subplot)
+sns.barplot(x='key', y='track_count', hue='mode', data=key_mode_streams, palette='coolwarm')
+plt.title('Track Count by Key and Mode')  # Sets the title of the second subplot
+plt.xlabel('Key')  # Label for x-axis
+plt.ylabel('Track Count')  # Label for y-axis
+
+# Adjusts the layout to ensure subplots fit without overlap
+plt.tight_layout()
+
+# Displays the figure with the two subplots
+plt.show()
+```
+
+##### *Part A.1:*
+```python
+# Import necessary libraries
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Patterns by Key with Multiple Colors
+# Groups the data by 'key' and calculates the average streams for each musical key.
+avg_streams_by_key = Spotify_Data.groupby('key')['streams'].mean()
+
+# Resets the index to prepare the data for plotting, and converts 'key' to string for better display.
+plot_data = avg_streams_by_key.reset_index()
+plot_data['key'] = plot_data['key'].astype(str)  # Convert keys to strings for display
+
+# Initializes a figure with size 10x8 inches for the bar plot.
+plt.figure(figsize=(10, 8))
+
+# Creates a bar plot using seaborn with hue applied to the 'key' column for color differentiation.
+# The palette 'viridis' is applied for color grading.
+sns.barplot(data=plot_data, x='key', y='streams', palette='viridis', hue='key', dodge=False)
+
+# Labels the x-axis as 'Musical Key' to indicate the grouping variable for the bars.
+plt.xlabel('Musical Key')
+
+# Labels the y-axis as 'Average Streams' to indicate the metric being visualized.
+plt.ylabel('Average Streams')
+
+# Sets the title of the plot to 'Average Streams by Musical Key' to describe the content.
+plt.title('Average Streams by Musical Key')
+
+# Disables the legend as the 'hue' parameter is only for color and doesn't need a separate legend.
+plt.legend([], [], frameon=False)
+
+# Displays the plot.
+plt.show()
+```
+
+##### *Part A.2:*
+```python
+# Groups the data by 'mode' (0 = Minor, 1 = Major) and calculates the average streams for each mode.
+avg_streams_by_mode = Spotify_Data.groupby('mode')['streams'].mean().reset_index()
+
+# Initializes a figure with size 10x8 inches for the bar plot.
+plt.figure(figsize=(10, 8))
+
+# Creates a bar plot to visualize the average streams for each mode (Minor vs Major).
+# The 'hue' argument ensures each mode has a different color, but the legend is hidden.
+sns.barplot(data=avg_streams_by_mode, x='mode', y='streams', palette='coolwarm', hue='mode', dodge=False)
+
+# Labels the x-axis as 'Mode (0 = Minor, 1 = Major)' to distinguish between the two modes.
+plt.xlabel('Mode (0 = Minor, 1 = Major)')
+
+# Labels the y-axis as 'Average Streams' to indicate the metric being visualized.
+plt.ylabel('Average Streams')
+
+# Sets the title of the plot to 'Average Streams by Mode' to describe the content.
+plt.title('Average Streams by Mode')
+
+# Customizes the x-axis tick labels to display 'Minor' and 'Major' instead of 0 and 1.
+plt.xticks([0, 1], ['Minor', 'Major'])
+
+# Disables the legend since the 'hue' is only used for color and not for grouping data.
+plt.legend([], [], frameon=False)
+
+# Displays the plot.
+plt.show()
 ```
 
 ##### *Part B:*
 ```python
+# Groups the data by 'artist(s)_name' and sums the occurrences of playlist and chart appearances.
+artist_playlist_counts = Spotify_Data.groupby('artist(s)_name')[[
+    'in_spotify_playlists', 'in_deezer_playlists', 'in_apple_playlists', 
+    'in_spotify_charts', 'in_apple_charts', 'in_deezer_charts', 'in_shazam_charts'
+]].sum().reset_index()
 
+# Adds a new column 'total_appearances' by summing the playlist and chart appearances for each artist.
+artist_playlist_counts['total_appearances'] = (
+    artist_playlist_counts[['in_spotify_playlists', 'in_deezer_playlists', 'in_apple_playlists', 
+                           'in_spotify_charts', 'in_apple_charts', 'in_deezer_charts', 'in_shazam_charts']].sum(axis=1)
+)
+
+# Sorts the data by 'total_appearances' in descending order and selects the top 10 artists.
+top_artists = artist_playlist_counts.sort_values(by='total_appearances', ascending=False).head(10)
+
+# Initializes a figure of size 14x8 inches for the bar plot.
+plt.figure(figsize=(14, 8))
+
+# Creates a bar plot to visualize the top 10 artists' total appearances in playlists and charts.
+# The 'hue' argument ensures each artist has a different color.
+sns.barplot(data=top_artists, x='artist(s)_name', y='total_appearances', hue='artist(s)_name', palette='Set3', dodge=False)
+
+# Labels the x-axis as 'Artist(s) Name' to represent the artists.
+plt.xlabel('Artist(s) Name')
+
+# Labels the y-axis as 'Total Appearances in Playlists and Charts' for clarity.
+plt.ylabel('Total Appearances in Playlists and Charts')
+
+# Sets the title of the plot to 'Top 10 Artists by Total Appearances in Playlists and Charts'.
+plt.title('Top 10 Artists by Total Appearances in Playlists and Charts')
+
+# Rotates the x-axis labels by 45 degrees for better readability.
+plt.xticks(rotation=45, ha='right')
+
+# Displays the plot with the customizations applied.
+plt.show()
+
+# Creates a detailed table showing the number of appearances for each artist across different platforms and charts.
+detailed_appearances = artist_playlist_counts.set_index('artist(s)_name')[[
+    'in_spotify_playlists', 'in_deezer_playlists', 'in_apple_playlists', 
+    'in_spotify_charts', 'in_apple_charts', 'in_deezer_charts', 'in_shazam_charts', 'total_appearances'
+]]
+
+# Prints the detailed appearance counts of the top 10 artists, sorted by total appearances.
+print("Detailed Artist Appearances in Playlists and Charts (Top 10 Artists):")
+print(detailed_appearances.sort_values(by='total_appearances', ascending=False).head(10))
 ```
 
 ## Expected Output:
